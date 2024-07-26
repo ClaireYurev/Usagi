@@ -26,11 +26,5 @@
     <ClInclude Include="WindowsOSMessageLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WindowsMessagesExtended.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowsMessages.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
