@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include "WindowsOSMessageLogger.h"
+#include "WinMsgLogger.h"
 
 LRESULT CALLBACK CustomWindowsProcedure(
     HWND handleToTheWindow,
@@ -8,7 +8,7 @@ LRESULT CALLBACK CustomWindowsProcedure(
     LPARAM lParam)
 {
     // Look through the Windows message map and print it out
-    static WindowsOSMessageLogger messageLogger;
+    static WinMsgLogger messageLogger;
     OutputDebugStringW(messageLogger(msg, lParam, wParam).c_str());
 
     // Behavior for when the window needs to close

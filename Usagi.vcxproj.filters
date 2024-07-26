@@ -18,12 +18,15 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsOSMessageLogger.cpp">
+    <ClCompile Include="WinMsgLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WindowsOSMessageLogger.h">
+    <ClInclude Include="WinMsgLogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WinMsgDefinitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
