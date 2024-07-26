@@ -141,10 +141,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Window.cpp" />
     <ClCompile Include="WinMsgLogger.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowsLite.h" />
     <ClInclude Include="WinMsgDefinitions.h" />
     <ClInclude Include="WinMsgLogger.h" />
   </ItemGroup>
