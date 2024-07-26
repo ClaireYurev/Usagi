@@ -25,12 +25,12 @@ Window::WindowClass::WindowClass() noexcept
 
 Window::WindowClass::~WindowClass()
 {
-    UnregisterClass(WindowClass::wndClassName, GetInstance());
+    UnregisterClass(WindowClass::customWindowClassName, GetInstance());
 }
 
 const wchar_t* Window::WindowClass::GetName() noexcept
 {
-    return wndClassName;
+    return customWindowClassName;
 }
 
 HINSTANCE Window::WindowClass::GetInstance() noexcept
@@ -40,11 +40,14 @@ HINSTANCE Window::WindowClass::GetInstance() noexcept
 
 
 // Window Stuff
-Window::Window(int width, int height, const wchar_t* name)
+Window::Window(int width, int height, const char* name)
     :
     width(width),
     height(height)
 {
+    // convert name to wide string
+    std::wstring wideName(name, name + strlen(name));
+
     // calculate window size based on desired client region size
     RECT wr;
     wr.left = 100;
@@ -54,7 +57,7 @@ Window::Window(int width, int height, const wchar_t* name)
     AdjustWindowRect(&wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE);
     // create window & get hWnd
     handleToTheWindow = CreateWindow(
-        WindowClass::GetName(), name,
+        WindowClass::GetName(), wideName.c_str(),
         WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
         CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top,
         nullptr, nullptr, WindowClass::GetInstance(), this

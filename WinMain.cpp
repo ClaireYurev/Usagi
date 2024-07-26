@@ -1,6 +1,34 @@
-#include <Windows.h>
-#include "WinMsgLogger.h"
-#include <sstream>
+#include "Window.h"
+
+int CALLBACK WinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine,
+    int nCmdShow)
+{
+    Window customWindow01(1378, 768, "YOU GOT THIS!");
+    MSG message;
+    BOOL getResult;
+    while ((getResult = GetMessage(&message, nullptr, 0, 0)) > 0)
+    {
+        TranslateMessage(&message);
+        DispatchMessage(&message);
+    }
+    if (getResult == -1)
+    {
+        return -1;
+    }
+
+    return static_cast<int>(message.wParam);  // Fix for the warning
+}
+
+
+
+
+/*
+
+Old EntryPoint:
+
 
 LRESULT CALLBACK CustomWindowsProcedure(
     HWND handleToTheWindow,
@@ -103,6 +131,5 @@ int WINAPI wWinMain(
         return static_cast<int>(msg.wParam); // Explicitly cast to int to address warning C4244
         /*  Let's return msg.wParam as int, when dealing with Windows applications, assuming the values are within the range of int.
         This might cause loss of data if msg.wParam holds a value larger than the maximum value of int.   */
-    }
+    
     // return 0; // Deprecated due to the if / else statement capturing wParam and returning it
-}
