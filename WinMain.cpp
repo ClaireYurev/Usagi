@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include "WinMsgLogger.h"
+#include <sstream>
 
 LRESULT CALLBACK CustomWindowsProcedure(
     HWND handleToTheWindow,
@@ -16,6 +17,33 @@ LRESULT CALLBACK CustomWindowsProcedure(
     {
     case WM_CLOSE:
         PostQuitMessage(73); // Closing - step 1: Application quits
+        break;
+    case WM_KEYDOWN:
+        if (wParam == 'H')
+        {
+            SetWindowText(handleToTheWindow, L"Palance ! ! !");
+        }
+        break;
+    case WM_KEYUP:
+        if (wParam == 'H')
+        {
+            SetWindowText(handleToTheWindow, L". 1 . 2 . 3 . 4 . ");
+        }
+        break;
+    case WM_CHAR:
+        {
+        static std::wstring title;
+        title.push_back((char)wParam);
+        SetWindowText(handleToTheWindow, title.c_str());
+        }
+        break;
+    case WM_LBUTTONDOWN:
+        {
+        POINTS point = MAKEPOINTS(lParam);
+        std::wostringstream oss;
+        oss << "(" << point.x << "," << point.y << ")";
+        SetWindowText(handleToTheWindow, oss.str().c_str());
+        }
         break;
     }
     return DefWindowProc(handleToTheWindow, msg, wParam, lParam); // Closing - step 2: Window is destroyed
