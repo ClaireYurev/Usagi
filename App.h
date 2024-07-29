@@ -6,15 +6,11 @@ class App
 {
 public:
 	App();
-	// Main frame / message loop
+	// Main frame / message game loop
 	int Go();
 private:
 	void DoFrame();
-	// render frame
-	// fire frame
-	// launch frame
-	// execute frame
-	// create frame
+
 private:
 	Window wnd;
 	UsagiTimer timer;
