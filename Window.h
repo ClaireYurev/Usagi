@@ -1,4 +1,5 @@
 #pragma once
+#include "Keyboard.h"
 #include "WindowsLite.h"
 #include "EngineException.h"
 
@@ -42,6 +43,8 @@ private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
+public:
+	Keyboard kbd;
 private:
 	int width;
 	int height;
@@ -49,6 +52,6 @@ private:
 };
 
 
-// error exception helper macro
+// Exception handling macros 
 #define USAGI_EXCEPT( hr ) Window::Exception( __LINE__,__FILE__,hr )
 #define USAGI_LAST_EXCEPT() Window::Exception( __LINE__,__FILE__,GetLastError() )
