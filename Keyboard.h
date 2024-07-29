@@ -1,6 +1,6 @@
 #pragma once
-#include <bitset>
 #include <queue>
+#include <bitset>
 
 class Keyboard
 {

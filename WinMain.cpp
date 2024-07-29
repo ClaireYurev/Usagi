@@ -1,3 +1,5 @@
+#pragma
+#include <sstream>
 #include "Window.h"
 
 /* Usagi Game Engine */
@@ -19,13 +21,77 @@ int CALLBACK WinMain(
             // TranslateMessage will post auxiliary WM_CHAR messages from key msgs
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            if (wnd.kbd.IsKeyPressed(VK_MENU))
+            
+            // New mouse input test 2: Scrolling
+            static int i = 0;
+            while (!wnd.mouse.IsEmpty())
+            {
+                const auto e = wnd.mouse.Read();
+                switch (e.GetType())
+                {
+                case Mouse::Event::Type::WheelUp:
+                    i++;
+                    {
+                        std::ostringstream oss;
+                        oss << "Up: " << i;
+                        wnd.SetTitle(oss.str());
+                    }
+                    break;
+                case Mouse::Event::Type::WheelDown:
+                    i--;
+                    {
+                        std::ostringstream oss;
+                        oss << "Down: " << i;
+                        wnd.SetTitle(oss.str());
+                    }
+                    break;
+                }
+            }
+
+            /* OLD TEST LOGIC: v0.2
+            // New mouse input test: Coordinates
+            while (!wnd.mouse.IsEmpty())
+            {
+                const auto e = wnd.mouse.Read();
+                switch (e.GetType())
+                {
+                case Mouse::Event::Type::Leave:
+                    wnd.SetTitle("Cursor is out of client window");
+                    break;
+                case Mouse::Event::Type::Move:
+                {
+                    std::ostringstream oss;
+                    oss << "Cursor moved to (" << e.GetPosX() << "," << e.GetPosY() << ")";
+                    wnd.SetTitle(oss.str());
+                }
+                break;
+                }
+            }
+
+            */
+
+            /* OLD TEST LOGIC: v0.1
+            
+             if (wnd.kbd.IsKeyPressed(VK_MENU))
             {
                 MessageBox(nullptr, "Alt Key Was Pressed", "Keyboard input:", MB_OK | MB_ICONEXCLAMATION);
             }
+            // Initial mouse pointer logic test
+            while (!wnd.mouse.IsEmpty())
+            {
+                const auto e = wnd.mouse.Read();
+                if (e.GetType() == Mouse::Event::Type::Move)
+                {
+                    std::ostringstream oss;
+                    oss << "Mouse Position: (" << e.GetPosX() << "," << e.GetPosY() << ")";
+                    wnd.SetTitle(oss.str());
+                }
+            }
+            */
+
         }
 
-        // Check if GetMessage call succeeded
+        // Check whether GetMessage call succeeded
         if (gResult == -1)
         {
             return -1;

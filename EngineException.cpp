@@ -1,4 +1,4 @@
-#include "EngineException.h"
+#include "UsagiEngineException.h"
 #include <sstream>
 
 UsagiException::UsagiException(int line, const char* file) noexcept

@@ -144,16 +144,18 @@
   <ItemGroup>
     <ClCompile Include="EngineException.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WinMsgLogger.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EngineException.h" />
+    <ClInclude Include="UsagiEngineException.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Window.h" />
-    <ClInclude Include="WindowsLite.h" />
+    <ClInclude Include="LightenedWindowsHeader.h" />
     <ClInclude Include="WinMsgDefinitions.h" />
     <ClInclude Include="WinMsgLogger.h" />
   </ItemGroup>

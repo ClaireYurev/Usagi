@@ -1,3 +1,4 @@
+#pragma once
 #include "Keyboard.h"
 
 bool Keyboard::IsKeyPressed(unsigned char keycode) const noexcept
