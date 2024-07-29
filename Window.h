@@ -1,9 +1,13 @@
 #pragma once
-#include "Mouse.h"
-#include <optional>
-#include "Keyboard.h"
-#include "EngineException.h"
 #include "LightenedWindowsHeader.h"
+#include "EngineException.h"
+#include "Mouse.h"
+#include "Keyboard.h"
+#include "Graphics.h"
+#include <optional>
+#include <memory>
+
+
 
 class Window
 {
@@ -43,6 +47,7 @@ public:
 	Window& operator=(const Window&) = delete;
 	void SetTitle(const std::string& title);
 	static std::optional<int> ProcessMessages();
+	Graphics& Gfx();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -50,10 +55,14 @@ private:
 public:
 	Keyboard kbd;
 	Mouse mouse;
+	// Graphics gfx;
+	// Constructing Graphics as an embedded object, like above, is impossible
+	// Defer construction of Graphics, since hWnd isn't created yet
 private:
 	int width;
 	int height;
 	HWND hWnd;
+	std::unique_ptr<Graphics> pGfx;
 };
 
 

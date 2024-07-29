@@ -76,8 +76,11 @@ Window::Window(int width, int height, const char* name)
 	{
 		throw USAGI_LAST_EXCEPT();
 	}
-	// Show window
+	// Windows that were created new start off as hidden
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	
+	// Create a graphics object
+	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window()
@@ -91,6 +94,7 @@ void Window::SetTitle(const std::string& title)
 	{
 		throw USAGI_LAST_EXCEPT();
 	}
+
 }
 
 std::optional<int> Window::ProcessMessages()
@@ -114,6 +118,11 @@ std::optional<int> Window::ProcessMessages()
 
 	// Return an empty optional when not quitting application
 	return {};
+}
+
+Graphics& Window::Gfx()
+{
+	return *pGfx;
 }
 
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
