@@ -1,8 +1,8 @@
 #pragma once
 #include "Mouse.h"
 #include "Keyboard.h"
+#include "EngineException.h"
 #include "LightenedWindowsHeader.h"
-#include "UsagiEngineException.h"
 
 class Window
 {
