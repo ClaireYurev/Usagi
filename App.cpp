@@ -4,7 +4,7 @@
 
 App::App()
 	:
-	wnd(800, 400, "Usagi Engine Main Window")
+	wnd(800, 600, "Usagi Engine Main Window")
 {}
 
 int App::Go()
@@ -25,6 +25,7 @@ void App::DoFrame()
 {
 	const float c = sin(timer.Peek()) / 2.0f + 0.5f;
 	wnd.Gfx().ClearBuffer(c, c, 1.0f);
+	wnd.Gfx().DrawTestTriangle();
 	wnd.Gfx().EndFrame();
 	/* Old test code
 	const float t = timer.Peek();
