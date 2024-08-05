@@ -127,17 +127,12 @@ void Graphics::DrawTestTriangle()
 		{  0.5f, -0.5f,   0,  255,   0,   0 },
 		{ -0.5f, -0.5f,   0,    0, 255,   0 },
 
-		{  0.0f,  0.5f, 255,    0,   0,   0 },
-		{ -0.5f, -0.5f,   0,    0, 255,   0 },
 		{ -0.3f,  0.3f,   0,  255,   0,   0 },
 
-		{  0.0f,  0.5f, 255,    0,   0,   0 },
 		{  0.3f,  0.3f,   0,    0, 255,   0 },
-		{  0.5f, -0.5f,   0,  255,   0,   0 },
 
 		{  0.0f, -0.8f, 255,    0,   0,   0 },
-		{ -0.5f, -0.5f,   0,    0, 255,   0 },
-		{  0.5f, -0.5f,   0,  255,   0,   0 },
+
 	};
 
 	vertices[0].color.g = 255;
@@ -153,10 +148,34 @@ void Graphics::DrawTestTriangle()
 	sd.pSysMem = vertices;
 	GFX_THROW_INFO(pDevice->CreateBuffer(&bd, &sd, &pVertexBuffer));
 
-	// Bind a vertex buffer to pipeline
+	// Bind the vertex buffer to pipeline
 	const UINT stride = sizeof(Vertex);
 	const UINT offset = 0u;
 	pContext->IASetVertexBuffers(0u, 1u,pVertexBuffer.GetAddressOf(), &stride, &offset);
+
+	// In order to Draw Indexed, we need to create & bind an Index Buffer:
+	const unsigned short indices[] =
+	{
+		0, 1, 2,
+		0, 2, 3,
+		0, 4, 1,
+		2, 1, 5,
+	};
+	// Data Type for this is the same as the Vertex Buffer
+	wrl::ComPtr<ID3D11Buffer> pIndexBuffer;
+	D3D11_BUFFER_DESC ibd = {};
+	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	ibd.Usage = D3D11_USAGE_DEFAULT;
+	ibd.CPUAccessFlags = 0u;
+	ibd.MiscFlags = 0u;
+	ibd.ByteWidth = sizeof(indices);
+	ibd.StructureByteStride = sizeof(unsigned short);
+	D3D11_SUBRESOURCE_DATA isd = {};
+	isd.pSysMem = indices;
+	GFX_THROW_INFO(pDevice->CreateBuffer(&ibd, &isd, &pIndexBuffer));
+
+	// Now BIND the index buffer
+	pContext->IASetIndexBuffer( pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 
 	// Create and Load a PIXEL Shader
 	wrl::ComPtr<ID3D11PixelShader> pPixelShader;
@@ -217,7 +236,7 @@ void Graphics::DrawTestTriangle()
 	// RS / Rasterizer Stage, expects an array of viewports
 	pContext->RSSetViewports(1u, &vp);
 
-	GFX_THROW_INFO_ONLY(pContext->Draw((UINT)std::size(vertices), 0u));
+	GFX_THROW_INFO_ONLY(pContext->DrawIndexed((UINT)std::size(indices), 0u, 0u));
 }
 
 
