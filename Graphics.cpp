@@ -105,21 +105,42 @@ void Graphics::DrawTestTriangle()
 
 	struct Vertex
 	{
-		float x;
-		float y;
-		float r;
-		float g;
-		float b;
+		struct
+		{
+			float x;
+			float y;
+		} pos;
+		struct
+		{
+			unsigned char r;
+			unsigned char g;
+			unsigned char b;
+			unsigned char a;
+		} color;
+
 	};
 
 	// Create a vertex buffer (with one 2-dimensional triangle at center of screen)
-	const Vertex vertices[] =
+	Vertex vertices[] =
 	{
-		{  0.0f,  0.5f,  1.0f,  0.0f,  0.0f  },
-		{  0.5f, -0.5f,  0.0f,  1.0f,  0.0f  },
-		{ -0.5f, -0.5f,  0.0f,  0.0f,  1.0f  },
+		{  0.0f,  0.5f, 255,   0,    0,   0 },
+		{  0.5f, -0.5f,   0,  255,   0,   0 },
+		{ -0.5f, -0.5f,   0,    0, 255,   0 },
+
+		{  0.0f,  0.5f, 255,    0,   0,   0 },
+		{ -0.5f, -0.5f,   0,    0, 255,   0 },
+		{ -0.3f,  0.3f,   0,  255,   0,   0 },
+
+		{  0.0f,  0.5f, 255,    0,   0,   0 },
+		{  0.3f,  0.3f,   0,    0, 255,   0 },
+		{  0.5f, -0.5f,   0,  255,   0,   0 },
+
+		{  0.0f, -0.8f, 255,    0,   0,   0 },
+		{ -0.5f, -0.5f,   0,    0, 255,   0 },
+		{  0.5f, -0.5f,   0,  255,   0,   0 },
 	};
 
+	vertices[0].color.g = 255;
 	wrl::ComPtr<ID3D11Buffer> pVertexBuffer;
 	D3D11_BUFFER_DESC bd = {};
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -163,7 +184,7 @@ void Graphics::DrawTestTriangle()
 		{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		// When we add a color ELEMENT, its offset into the structure will be: 9 bytes
 		// Alternatively, we can use D3D11_APPEND_ALIGNED_ELEMENT here to let D3D figure this out as well
-		{ "Color", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 8u, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8u, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 	GFX_THROW_INFO(pDevice->CreateInputLayout(
 		ied, (UINT)std::size(ied),
