@@ -19,9 +19,18 @@ It needs a position of each vertex is order to rasterize it.
 
 */
 
+struct VSOut
+{   
+    // Order matters: pos first and color second won't work
+    float3 color : Color;
+    float4 pos : SV_Position;
+};
 
-float4 main( float2 pos : Position ) : SV_Position
+VSOut main(float2 pos : Position, float3 color : Color)
 {
-    return float4(pos.x, pos.y, 0.0f, 1.0f);
+    VSOut vso;
+    vso.pos = float4(pos.x, pos.y, 0.0f, 1.0f);
+    vso.color = color;
+    return vso;
 }
 
